@@ -277,6 +277,19 @@ body { padding-top:32px; }
 .fx-head { width:100%;max-width:none;margin:0 auto;text-align:center; }
 .fx-hero { grid-template-columns:1fr;justify-items:center;gap:22px; }
 .fx-hero-text { width:100%;text-align:center; }
+.fx { position:relative; }
+.fx-petals { position:absolute;top:0;left:0;width:100%;overflow:hidden;pointer-events:none;z-index:2;opacity:0;transition:opacity .8s ease;mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 70%,transparent 98%);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 70%,transparent 98%); }
+.fx-petals.is-visible { opacity:1; }
+.fx-petal { position:absolute;top:-14px;left:var(--left);width:8px;height:13px;border-radius:85% 15% 75% 25%;background:linear-gradient(135deg,#f1ead9,#cfc3aa);opacity:0;animation:fx-petal-fall var(--duration) linear var(--delay) both;animation-play-state:paused; }
+.fx-petals.is-visible .fx-petal { animation-play-state:running; }
+@keyframes fx-petal-fall {
+  0% { transform:translate3d(0,0,0) rotate(15deg);opacity:0; }
+  12% { opacity:.32; }
+  45% { transform:translate3d(var(--drift),calc(var(--fall) * .45),0) rotate(95deg);opacity:.3; }
+  72% { opacity:.2; }
+  100% { transform:translate3d(0,var(--fall),0) rotate(190deg);opacity:0; }
+}
+@media (prefers-reduced-motion:reduce) { .fx-petals { display:none; } }
 .fx-portrait { width:170px; }
 .fx-portrait-frame { padding:5px;box-shadow:0 12px 36px #0003; }
 .fx-portrait figcaption { display:flex;flex-direction:column;align-items:center;margin-top:12px;font-size:.9rem;text-align:center; }
@@ -1058,6 +1071,7 @@ function startIntro() {
   if (introStarted) return;
   introStarted = true;
   LETTER_DONE = performance.now() + 6900;
+  setTimeout(() => window.dispatchEvent(new Event('fx:memorial-ready')), 6900);
   const letter = document.querySelector('.fx-letter');
   requestAnimationFrame(() => {
     if (letter) letter.classList.add('is-open');
@@ -1434,6 +1448,7 @@ dash.onData(() => {
 </script>
 
 <script src="memorial-dates.js"></script>
+<script src="memorial-petals.js"></script>
 </body>
 </html>
 
