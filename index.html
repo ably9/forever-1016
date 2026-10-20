@@ -295,13 +295,13 @@ body { padding-top:32px; }
 .fx-days-range { display:block;margin:5px 0 0;font-size:.85rem; }
 .fx-verse { font-size:.94rem;line-height:1.9;margin:22px auto;max-width:31rem; }
 .fx-home-album { padding:12px 22px;font-size:1rem;min-height:48px; }
-.fx-rv { transition:opacity 1s ease,transform 1s ease,filter 1s ease; }
-.fx-intro { transition:opacity .9s ease,visibility .9s; }
+.fx-rv { transition:opacity 1.4s ease,transform 1.4s ease,filter 1.4s ease; }
+.fx-intro { transition:opacity 1.2s ease,visibility 1.2s; }
 .fx-intro-in { animation-duration:.9s; }
 .fx-intro-actions { display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px; }
 .fx-intro-actions .fx-btn { font:inherit;min-height:46px;padding:10px 18px;cursor:pointer; }
 .fx-text-btn { display:block;margin:18px auto 0;border:0;background:none;color:var(--color-fg-muted);font:inherit;font-size:.85rem;padding:10px;cursor:pointer; }
-.fx-ghost { transition:transform 1.3s cubic-bezier(.45,0,.25,1),border-radius 1.3s ease; }
+.fx-ghost { transition:transform 2s cubic-bezier(.45,0,.25,1),border-radius 2s ease; }
 .fx-skip-intro .fx-rv,.fx-skip-intro .fx-letter::before,.fx-skip-intro .fx-letter::after { opacity:1!important;transform:none!important;filter:none!important;transition:none!important; }
 .fx-album-head { display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin:28px 0 24px; }
 .fx-album-head h2 { font:400 1.5rem var(--font-anthropic-serif);margin:0 0 8px; }
@@ -395,10 +395,10 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
 
   <section class="fx-page" id="pg-memories" role="tabpanel" aria-labelledby="tab-memories">
     <blockquote class="fx-letter">
-      <p><span class="fx-line fx-rv" data-d="100">너무 이쁘고 사랑이 넘쳤던 내 고모,</span><span class="fx-line fx-rv" data-d="650">우리 가족들에겐 너무나 밝은 빛이었어.</span><span class="fx-line fx-rv" data-d="1200">사랑하고 감사합니다.</span></p>
-      <footer class="fx-rv" data-d="1750">- 동준 올림 -</footer>
+      <p><span class="fx-line fx-rv" data-d="300">너무 이쁘고 사랑이 넘쳤던 내 고모,</span><span class="fx-line fx-rv" data-d="1800">우리 가족들에겐 너무나 밝은 빛이었어.</span><span class="fx-line fx-rv" data-d="3300">사랑하고 감사합니다.</span></p>
+      <footer class="fx-rv" data-d="4700">- 동준 올림 -</footer>
     </blockquote>
-    <div class="fx-after fx-rv" data-d="2200">
+    <div class="fx-after fx-rv" data-d="5500">
       <p class="fx-days">우리 곁에 머물러 준 <b>20,610일</b><span class="fx-days-range">1970. 5. 13 – 2026. 10. 16</span></p>
       <p class="fx-verse">“모든 눈물을 그 눈에서 씻기시매 다시 사망이 없고 애통하는 것이나 곡하는 것이나 아픈 것이 다시 있지 아니하리니” <span class="fx-verse-ref">요한계시록 21:4</span></p>
       <button class="fx-ss-open fx-home-album" id="album-go" data-tab="album" type="button">함께한 순간들 보기 <span aria-hidden="true">→</span></button>
@@ -1041,7 +1041,7 @@ window.addEventListener('pageshow', toTop);
 function startIntro() {
   if (introStarted) return;
   introStarted = true;
-  LETTER_DONE = performance.now() + 3400;
+  LETTER_DONE = performance.now() + 6900;
   const letter = document.querySelector('.fx-letter');
   requestAnimationFrame(() => {
     if (letter) letter.classList.add('is-open');
@@ -1081,11 +1081,11 @@ function startIntro() {
       let landed = false;
       const done = () => { if (landed) return; landed=true; to.style.visibility=''; ghost.remove(); startIntro(); };
       ghost.addEventListener('transitionend', done, {once:true});
-      setTimeout(done, 1550);
+      setTimeout(done, 2250);
     } else { startIntro(); }
     cover.classList.add('is-out');
     if (skip) cover.style.transition = 'none';
-    setTimeout(() => { cover.remove(); document.querySelector('.fx-main-tabs [aria-selected="true"]').focus({preventScroll:true}); }, skip ? 0 : 950);
+    setTimeout(() => { cover.remove(); document.querySelector('.fx-main-tabs [aria-selected="true"]').focus({preventScroll:true}); }, skip ? 0 : 1250);
   };
   document.getElementById('intro-enter').addEventListener('click', () => enter(true));
   document.getElementById('intro-quiet').addEventListener('click', () => enter(false));

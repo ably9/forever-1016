@@ -135,7 +135,7 @@ async function run() {
       await page.locator('#intro-quiet').click();
       await page.locator('#intro').waitFor({state:'detached'});
       await page.locator('#tab-memories').click();
-      await page.waitForTimeout(5000);
+      await page.waitForFunction(() => getComputedStyle(document.querySelector('#pg-memories .fx-after')).opacity === '1', null, {timeout:15000});
       assert.equal(await page.locator('#pg-memories .fx-after').evaluate(el=>getComputedStyle(el).opacity), '1', 'Opening on album must not suppress the home letter');
       assert.deepEqual(errors, [], 'No uncaught JS errors');
       console.log('PASS: navigation, photos, slideshow, encrypted unlock, relock, direct links, revisit, layout at ' + width + 'px');
