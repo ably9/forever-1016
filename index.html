@@ -407,11 +407,18 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
 .fx-install-head { display:flex;align-items:center;justify-content:space-between;gap:12px; }
 .fx-install-head h2 { margin:0;font-size:1.25rem; }
 .fx-install-head button { min-width:44px;min-height:44px;color:var(--color-fg);background:transparent;border:0;font:inherit;cursor:pointer; }
-.fx-install-help ol { padding-left:24px; }
-#install-steps section { margin-top:20px; }
-#install-steps section+section { border-top:1px solid var(--color-border-line);padding-top:18px; }
-#install-steps h3 { font-size:1rem;line-height:1.6;margin:0; }
-.fx-install-help li { padding-left:4px;margin:12px 0; }
+.fx-install-help ol { list-style:none;padding:0;margin:14px 0;display:grid;gap:10px; }
+#install-steps section { margin-top:16px; }
+#install-steps h3 { font-size:.9rem;line-height:1.6;margin:0;color:var(--color-fg-muted);font-weight:400; }
+.fx-install-help li { display:flex;align-items:center;gap:14px;margin:0;padding:14px;border:1px solid var(--color-border-line);border-radius:14px; }
+.fx-install-symbol { display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:12px;background:#ece8e10b;color:#e9dfc9; }
+.fx-install-symbol svg { width:25px;height:25px; }
+.fx-install-symbol img { width:38px;height:38px;border-radius:9px; }
+.fx-install-help li strong { display:block;font-size:1rem;font-weight:500; }
+.fx-install-help li small { display:block;font-size:.78rem;line-height:1.6;color:var(--color-fg-muted);margin-top:3px; }
+.fx-install-help details { margin-top:14px;padding-top:12px;border-top:1px solid var(--color-border-line);font-size:.8rem;color:var(--color-fg-muted); }
+.fx-install-help summary { cursor:pointer;min-height:32px; }
+#install-platform-note { font-size:.85rem;color:var(--color-fg-muted);line-height:1.7;margin:8px 0; }
 .fx-install-copy { display:flex;gap:8px; }
 .fx-install-copy input { flex:1;min-width:0;color:var(--color-fg-muted);background:var(--color-bg);border:1px solid var(--color-border-line);border-radius:8px;padding:10px;font:inherit;font-size:.8rem; }
 .fx-install-copy button { font:inherit;white-space:nowrap;cursor:pointer; }
@@ -1421,31 +1428,46 @@ dash.onData(() => {
     const ios=/iP(hone|ad|od)/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
     const android=/Android/i.test(ua),inApp=/KAKAOTALK|NAVER|Instagram|FBAN|FBAV|Line\//i.test(ua);
     const note=inApp
-      ? '카카오톡 등 앱 안에서 열었다면, 아이폰은 Safari, 안드로이드는 Chrome 또는 삼성 인터넷에서 이 주소를 열어 주세요.'
-      : '아이폰과 안드로이드 모두 홈 화면에 추가할 수 있어요. 아래에서 사용하는 기기의 방법을 따라 주세요.';
+      ? '먼저 Safari(아이폰) 또는 Chrome·삼성 인터넷(안드로이드)에서 열어 주세요. 아래에서 주소를 복사할 수 있어요.'
+      : ios ? 'Safari에서 아래 세 가지만 눌러 주세요.' : android ? '브라우저에서 아래 순서대로 눌러 주세요.' : '휴대폰에서 아래 순서대로 추가해 주세요.';
     const guides=[
-      {title:'아이폰 · 아이패드 (Safari)',steps:[
-        'Safari에서 이 사이트를 열어 주세요.',
-        '공유 버튼을 눌러 주세요. 페이지 메뉴 안에 공유가 있을 수도 있어요.',
-        '‘홈 화면에 추가’를 선택해 주세요.',
-        '이름을 확인하고 ‘추가’를 눌러 주세요.'
-      ],note:'‘웹 앱으로 열기’가 보이면 켜 주세요. ‘홈 화면에 추가’가 없으면 공유 메뉴 아래의 ‘동작 편집’에서 추가할 수 있어요.'},
-      {title:'안드로이드 (Chrome · 삼성 인터넷)',steps:[
-        'Chrome 또는 삼성 인터넷에서 이 사이트를 열어 주세요.',
-        '브라우저 메뉴(⋮ 또는 ☰)를 눌러 주세요.',
-        '‘홈 화면에 추가’ 또는 ‘앱 설치’를 선택해 주세요. 삼성 인터넷에서는 ‘현재 페이지 추가 → 홈 화면’으로 표시될 수도 있어요.',
-        '이름을 확인하고 ‘추가’ 또는 ‘설치’를 눌러 주세요.'
-      ],note:'설치 창이 바로 열리면 ‘설치’를 눌러 주세요. 메뉴 이름은 브라우저에 따라 조금 다를 수 있어요.'}
+      {title:'아이폰 · 아이패드 (Safari)',other:'아이폰 방법 보기',steps:[
+        {icon:'share',label:'공유',hint:'주소창 옆 메뉴(…) 안에 있을 수도 있어요.'},
+        {icon:'home',label:'홈 화면에 추가',hint:'공유 메뉴를 아래로 내려서 찾아 주세요.'},
+        {icon:'portrait',label:'추가',hint:'고모 사진 아이콘을 확인하고 눌러 주세요.'}
+      ],note:'‘웹 앱으로 열기’가 보이면 켜 주세요. ‘홈 화면에 추가’가 없으면 공유 메뉴의 ‘동작 편집’을 확인해 주세요.'},
+      {title:'안드로이드 (Chrome · 삼성 인터넷)',other:'안드로이드 방법 보기',steps:[
+        {icon:'menu',label:'메뉴 ⋮ 또는 ☰',hint:'Chrome 또는 삼성 인터넷에서 열어 주세요.'},
+        {icon:'home',label:'홈 화면에 추가 · 앱 설치',hint:'삼성 인터넷: 현재 페이지 추가 → 홈 화면'},
+        {icon:'portrait',label:'추가 · 설치',hint:'고모 사진 아이콘을 확인하고 눌러 주세요.'}
+      ],note:'설치 창이 바로 열렸다면 ‘설치’만 누르면 돼요. 메뉴 이름은 브라우저마다 조금 다를 수 있어요.'}
     ];
     if(android&&!ios)guides.reverse();
+    const iconPaths={
+      share:'<path d="M12 15V2m-4 4 4-4 4 4M7 10H4v11h16V10h-3"/>',
+      home:'<path d="m3 11 9-8 9 8M5 10v11h14V10M12 11v7m-3-3.5h6"/>',
+      menu:'<path d="M5 6h14M5 12h14M5 18h14"/>'
+    };
+    function guideSection(guide){
+      const section=document.createElement('section'),heading=document.createElement('h3'),list=document.createElement('ol');
+      heading.textContent=guide.title;
+      guide.steps.forEach((step,i)=>{
+        const li=document.createElement('li'),symbol=document.createElement('span'),text=document.createElement('div'),label=document.createElement('strong'),hint=document.createElement('small');
+        symbol.className='fx-install-symbol';symbol.setAttribute('aria-hidden','true');
+        if(step.icon==='portrait'){
+          const photo=document.createElement('img');photo.src='apple-touch-icon-face.png';photo.alt='';symbol.append(photo);
+        }else{
+          const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+          svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.6');svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');svg.innerHTML=iconPaths[step.icon];symbol.append(svg);
+        }
+        label.textContent=(i+1)+'. '+step.label;hint.textContent=step.hint;text.append(label,hint);li.append(symbol,text);list.append(li);
+      });
+      const more=document.createElement('details'),summary=document.createElement('summary'),tip=document.createElement('p');summary.textContent='메뉴가 보이지 않나요?';tip.textContent=guide.note;more.append(summary,tip);section.append(heading,list,more);return section;
+    }
+    const alternate=document.createElement('details'),summary=document.createElement('summary');summary.textContent=guides[1].other;alternate.append(summary,guideSection(guides[1]));
     document.getElementById('install-platform-note').textContent=note;
-    document.getElementById('install-extra').textContent='추가한 뒤에는 휴대폰 홈 화면의 고모 사진 아이콘으로 바로 들어올 수 있어요.';
-    document.getElementById('install-steps').replaceChildren(...guides.map(guide=>{
-      const section=document.createElement('section'),heading=document.createElement('h3'),list=document.createElement('ol'),tip=document.createElement('p');
-      heading.textContent=guide.title;tip.className='fx-note';tip.textContent=guide.note;
-      list.append(...guide.steps.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
-      section.append(heading,list,tip);return section;
-    }));
+    document.getElementById('install-extra').textContent='추가한 뒤에는 홈 화면의 고모 사진을 누르면 바로 만날 수 있어요.';
+    document.getElementById('install-steps').replaceChildren(guideSection(guides[0]),alternate);
     document.getElementById('install-url').value=homeUrl;status.textContent='';
     help.showModal();
   }
