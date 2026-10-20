@@ -224,7 +224,11 @@ th[aria-sort="descending"] .fx-sort::after { content: "▼"; font-size: 0.7em; }
 .fx-photo.fx-ph.is-in { opacity: 1; transform: none; filter: none; }
 @media (prefers-reduced-motion: reduce) { .fx-rv, .fx-photo.fx-ph { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; } }
 .fx-letter footer { margin-top: var(--cds-gap-md); font-size: var(--cds-font-size-body); color: var(--color-fg-muted); letter-spacing: .05em; }
-.fx-music { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 40; display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: var(--cds-font-size-caption); padding: 8px 14px; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); box-shadow: 0 4px 14px rgba(0,0,0,.25); cursor: pointer; }
+.fx-ambient-controls { position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:6px; }
+.fx-ambient-btn { display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:44px;padding:8px 11px;font:inherit;font-size:.75rem;border-radius:999px;border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);box-shadow:0 4px 14px #0003;cursor:pointer; }
+.fx-ambient-btn::after { content:"";width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.3; }
+.fx-ambient-btn[aria-pressed="true"]::after { background:#d9c69b;opacity:1; }
+.fx-ambient-btn[aria-pressed="false"] > [aria-hidden="true"] { opacity:.4; }
 .fx-music-ico { font-size: 1rem; line-height: 1; }
 .fx-music[aria-pressed="true"] .fx-music-ico { animation: fx-pulse 1.8s ease-in-out infinite; }
 @keyframes fx-pulse { 50% { opacity: .35; } }
@@ -439,7 +443,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
       <button type="button" data-season-choice="leaf" aria-pressed="false">단풍</button>
       <button type="button" data-season-choice="snow" aria-pressed="false">눈</button>
       <button type="button" data-season-choice="light" aria-pressed="false">빛 입자</button>
-      <button type="button" data-season-choice="off" aria-pressed="false">끄기</button>
     </div>
     </div>
   </header>
@@ -607,7 +610,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
   <p id="install-status" role="status"></p>
 </dialog>
 <audio id="bgm" src="music.mp4" loop preload="auto" playsinline></audio>
-<button class="fx-music" id="bgm-btn" type="button" aria-pressed="false"><span class="fx-music-ico" aria-hidden="true">♪</span><span id="bgm-label">음악 켜기</span></button>
+<div class="fx-ambient-controls" role="group" aria-label="음악과 효과 설정">
+  <button class="fx-music fx-ambient-btn" id="bgm-btn" type="button" aria-pressed="false" aria-label="음악 켜기" title="음악 켜기"><span class="fx-music-ico" aria-hidden="true">♪</span><span id="bgm-label">음악</span></button>
+  <button class="fx-ambient-btn" id="effect-toggle" type="button" aria-pressed="true" aria-label="효과 끄기" title="효과 끄기"><span aria-hidden="true">✧</span><span>효과</span></button>
+</div>
 
 <div class="fx-ss" id="slideshow" role="dialog" aria-modal="true" aria-label="사진 슬라이드쇼" hidden>
   <div class="fx-ss-layer" id="ss-a"><img class="fx-ss-bg" alt=""><img class="fx-ss-img" alt=""></div>
@@ -1170,7 +1176,7 @@ function showLb(i) {
 function modalState(open) {
   document.documentElement.style.overflow=open?'hidden':'';
   document.querySelector('.fx').inert=open;
-  document.getElementById('bgm-btn').inert=open;
+  document.querySelector('.fx-ambient-controls').inert=open;
 }
 function trapModal(e,host) {
   if(e.key!=='Tab')return;
@@ -1325,7 +1331,7 @@ dash.onData(() => {
   let wantOn = false;
   let ctx = null, gain = null, src = null, buf = null, decoding = null, playing = false;
   const prefetch = useEl ? null : fetch(URL_).then((r) => r.arrayBuffer()).catch(() => null);
-  const sync = () => { btn.setAttribute('aria-pressed', String(playing)); label.textContent = playing ? '음악 끄기' : '음악 켜기'; };
+  const sync = () => { btn.setAttribute('aria-pressed', String(playing)); label.textContent = '음악'; btn.setAttribute('aria-label', playing ? '음악 끄기' : '음악 켜기'); btn.title = playing ? '음악 끄기' : '음악 켜기'; };
   au.loop = true; au.volume = VOL;
   au.addEventListener('pause', () => { if (useEl && playing) { playing = false; sync(); } });
   function decode() {
@@ -1473,7 +1479,7 @@ dash.onData(() => {
 </script>
 
 <script src="memorial-dates.js"></script>
-<script src="memorial-petals.js?v=20261020-snow"></script>
+<script src="memorial-petals.js?v=20261020-controls"></script>
 </body>
 </html>
 

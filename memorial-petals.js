@@ -10,6 +10,8 @@
   let ready = !document.getElementById('intro');
   const requested = new URLSearchParams(location.search).get('effect');
   let choice = ['spring','summer','leaf','snow','light','off'].includes(requested) ? requested : 'auto';
+  let lastChoice = choice === 'off' ? 'auto' : choice;
+  const toggle = document.getElementById('effect-toggle');
   buttons.forEach(item => item.setAttribute('aria-pressed', String(item.dataset.seasonChoice === choice)));
   let rendered = '';
   function season() {
@@ -33,6 +35,10 @@
     update();
   }
   function update() {
+    buttons.forEach(item => item.setAttribute('aria-pressed', String(item.dataset.seasonChoice === choice)));
+    toggle.setAttribute('aria-pressed', String(choice !== 'off'));
+    toggle.setAttribute('aria-label', choice === 'off' ? '효과 켜기' : '효과 끄기');
+    toggle.title = choice === 'off' ? '효과 켜기' : '효과 끄기';
     const current = choice === 'auto' ? season() : choice;
     const count = current === 'snow' ? (innerWidth < 700 ? 26 : 40) : (innerWidth < 700 ? 12 : 18);
     const key = current + ':' + count;
@@ -53,9 +59,14 @@
   }
   buttons.forEach(button => button.addEventListener('click', () => {
     choice = button.dataset.seasonChoice;
-    buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    if (choice !== 'off') lastChoice = choice;
     update();
   }));
+  toggle.addEventListener('click', () => {
+    if (choice === 'off') choice = lastChoice;
+    else { lastChoice = choice; choice = 'off'; }
+    update();
+  });
   resize();
   new ResizeObserver(resize).observe(tabs);
   window.addEventListener('resize', resize);
