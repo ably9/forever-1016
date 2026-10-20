@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="yellow" x1="0" y1="1" x2="0" y2="0">
+      <stop stop-color="#dfaa22"/>
+      <stop offset=".4" stop-color="#f6d244"/>
+      <stop offset="1" stop-color="#ffe77e"/>
+    </linearGradient>
+    <g id="petal">
+      <path d="M32 33C26 28 20 18 25 10C28 4 35 3 39 9C45 18 39 28 32 33Z" fill="url(#yellow)"/>
+      <path d="M32 31Q31 20 32 10M31 28Q27 21 26 15M34 28Q38 21 38 15" fill="none" stroke="#d4a326" stroke-opacity=".32" stroke-width=".65"/>
+    </g>
+  </defs>
+  <use href="#petal"/>
+  <use href="#petal" transform="rotate(72 32 32)"/>
+  <use href="#petal" transform="rotate(144 32 32)"/>
+  <use href="#petal" transform="rotate(216 32 32)"/>
+  <use href="#petal" transform="rotate(288 32 32)"/>
+  <circle cx="32" cy="32" r="4" fill="#eab52a"/>
+  <g fill="#fff0a4">
+    <circle cx="32" cy="29.5" r=".9"/>
+    <circle cx="34.4" cy="31.2" r=".9"/>
+    <circle cx="33.5" cy="34" r=".9"/>
+    <circle cx="30.5" cy="34" r=".9"/>
+    <circle cx="29.6" cy="31.2" r=".9"/>
+  </g>
+</svg>
