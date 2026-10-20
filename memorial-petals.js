@@ -34,7 +34,7 @@
   }
   function update() {
     const current = choice === 'auto' ? season() : choice;
-    const count = innerWidth < 700 ? 12 : 18;
+    const count = current === 'snow' ? (innerWidth < 700 ? 26 : 40) : (innerWidth < 700 ? 12 : 18);
     const key = current + ':' + count;
     layer.classList.toggle('is-visible', ready && !document.hidden && current !== 'off');
     // Fixed particle count; each completed descent gets fresh random values.
