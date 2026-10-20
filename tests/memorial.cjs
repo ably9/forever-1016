@@ -47,7 +47,7 @@ async function run() {
       page.on('pageerror', e => errors.push(e.message));
       await page.route('https://**/*', route => route.abort());
       await page.goto(base, {waitUntil:'domcontentloaded'});
-      assert.deepEqual(await page.locator('[aria-label="주 메뉴"] [role="tab"]').allTextContents(), ['고모를 기억하며','함께한 순간들','상주 전용']);
+      assert.deepEqual(await page.locator('[aria-label="주 메뉴"] [role="tab"]').allTextContents(), ['사랑을 기억하며','함께한 순간들','상주 전용']);
       assert.equal(await page.evaluate(()=>dash.data('items').data.length), 0, 'Expense data must stay encrypted before unlock');
       assert.equal(await page.evaluate(()=>dash.data('donations').data.length), 0, 'Donations must stay encrypted before unlock');
       assert.equal(await page.locator('#home-add').count(), 1, 'Home-screen installation entry');
