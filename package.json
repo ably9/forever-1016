@@ -1,0 +1,6 @@
+{
+  "name": "forever-1016",
+  "private": true,
+  "scripts": { "test": "node tests/memorial.cjs" },
+  "devDependencies": { "playwright": "1.62.1" }
+}
