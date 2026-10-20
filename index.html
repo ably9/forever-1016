@@ -282,6 +282,11 @@ body { padding-top:32px; }
 .fx-portrait figcaption { display:flex;flex-direction:column;align-items:center;margin-top:12px;font-size:.9rem;text-align:center; }
 .fx-dates { flex:none;width:max-content;margin-top:7px;font-size:.875rem;text-align:center; }
 .fx-title { width:100%;font-size:clamp(1rem,5.8vw,2rem);line-height:1.6;letter-spacing:-.035em;white-space:nowrap;text-align:center;margin:0; }
+.fx-memorial-dates { display:flex;justify-content:center;align-items:start;gap:clamp(20px,6vw,48px);margin:18px 0 0;font-variant-numeric:tabular-nums; }
+.fx-memorial-dates > div { flex:0 1 auto;min-width:0;text-align:center; }
+.fx-memorial-dates dt { color:var(--color-fg-muted);font-size:.78rem;margin-bottom:5px; }
+.fx-memorial-dates dd { margin:0;font-size:clamp(.9rem,3.7vw,1.1rem);line-height:1.5;white-space:nowrap; }
+.fx-memorial-dates small { display:block;margin-top:4px;font-size:.7rem;color:var(--color-fg-muted); }
 .fx-main-tabs { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;width:100%;margin:24px auto 0;max-width:none; }
 .fx-main-tabs .fx-tab { min-height:48px;font-size:clamp(.78rem,3.5vw,.95rem);padding:10px 4px;text-align:center;white-space:nowrap; }
 .fx-main-tabs #tab-family { color:var(--color-fg-muted); }
@@ -393,6 +398,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
     </figure>
     <div class="fx-hero-text">
     <h1 class="fx-title">사랑하는 임경숙 행복해진 날 <span aria-hidden="true">🕊</span></h1>
+    <dl class="fx-memorial-dates" aria-label="추모 날짜">
+      <div><dt>떠나보낸 지</dt><dd id="memorial-elapsed">—</dd></div>
+      <div><dt>다음 기일까지</dt><dd id="memorial-countdown">—</dd><dd><small id="memorial-next-date"></small></dd></div>
+    </dl>
     </div>
   </header>
 
@@ -1424,6 +1433,7 @@ dash.onData(() => {
 })();
 </script>
 
+<script src="memorial-dates.js"></script>
 </body>
 </html>
 
