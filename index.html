@@ -280,20 +280,30 @@ body { padding-top:32px; }
 .fx { position:relative; }
 .fx-petals { position:absolute;top:0;left:0;width:100%;overflow:hidden;pointer-events:none;z-index:2;opacity:0;transition:opacity .8s ease;mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 70%,transparent 98%);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 70%,transparent 98%); }
 .fx-petals.is-visible { opacity:1; }
-.fx-petal { position:absolute;top:-14px;left:var(--left);width:9px;height:14px;border-radius:85% 15% 75% 25%;background:linear-gradient(135deg,#f1ead9,#cfc3aa);opacity:0;animation:fx-petal-fall var(--duration) linear var(--delay) infinite both;animation-play-state:paused; }
-.fx-petals[data-season="leaf"] .fx-petal { width:15px;height:17px;border-radius:0;background:linear-gradient(145deg,#b7673c,#d7a264);clip-path:polygon(50% 0,60% 26%,77% 14%,74% 39%,100% 35%,84% 58%,94% 68%,57% 79%,54% 100%,47% 100%,46% 79%,7% 68%,17% 57%,0 35%,27% 39%,24% 14%,41% 26%); }
-.fx-petals[data-season="snow"] .fx-petal { width:4px;height:4px;border-radius:50%;background:#f6f2e9; }
+.fx-petal { position:absolute;top:-14px;left:var(--left);width:calc(9px * var(--size));height:calc(14px * var(--size));border-radius:85% 15% 75% 25%;background:linear-gradient(135deg,#f1ead9,#cfc3aa);opacity:0;animation:fx-petal-fall var(--duration) linear var(--delay) both;animation-play-state:paused; }
+.fx-petals[data-season="spring"] .fx-petal { width:calc(11px * var(--size));height:calc(12px * var(--size));border-radius:75% 30% 70% 35%;background:linear-gradient(145deg,#f8dce1,#dbaebd);clip-path:polygon(45% 0,55% 12%,67% 2%,87% 12%,100% 35%,94% 62%,65% 89%,28% 100%,9% 77%,0 47%,13% 17%); }
+.fx-petals[data-season="summer"] .fx-petal { border-radius:90% 10% 85% 15%;background:linear-gradient(135deg,#f6eedc,#d6c9ab); }
+.fx-petals[data-season="leaf"] .fx-petal { width:calc(15px * var(--size));height:calc(17px * var(--size));border-radius:0;background:linear-gradient(145deg,#b7673c,#d7a264);clip-path:polygon(50% 0,60% 26%,77% 14%,74% 39%,100% 35%,84% 58%,94% 68%,57% 79%,54% 100%,47% 100%,46% 79%,7% 68%,17% 57%,0 35%,27% 39%,24% 14%,41% 26%); }
+.fx-petals[data-season="snow"] .fx-petal { width:calc(4px * var(--size));height:calc(4px * var(--size));border-radius:50%;background:#f6f2e9; }
+.fx-petals[data-season="light"] .fx-petal { width:calc(4px * var(--size));height:calc(4px * var(--size));border-radius:50%;background:radial-gradient(circle,#fff8df 0%,#e9d4a4 35%,#dec48d33 72%,transparent 100%);box-shadow:0 0 9px 3px #ead5a42e;animation-name:fx-light-float; }
 .fx-season-test { display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px;margin:14px auto 0; }
 .fx-season-test span { font-size:.68rem;color:var(--color-fg-muted);margin-right:3px; }
 .fx-season-test button { font:inherit;font-size:.7rem;color:var(--color-fg-muted);border:1px solid var(--color-border-line);border-radius:16px;background:transparent;padding:5px 9px;min-height:30px;cursor:pointer; }
 .fx-season-test button[aria-pressed="true"] { color:var(--color-fg);border-color:#aaa08c;background:#ece8e10a; }
 .fx-petals.is-visible .fx-petal { animation-play-state:running; }
 @keyframes fx-petal-fall {
-  0% { transform:translate3d(0,0,0) rotate(15deg);opacity:0; }
-  8% { opacity:.48; }
-  45% { transform:translate3d(var(--drift),calc(var(--fall) * .45),0) rotate(95deg);opacity:.42; }
-  72% { opacity:.28; }
-  100% { transform:translate3d(0,var(--fall),0) rotate(190deg);opacity:0; }
+  0% { transform:translate3d(0,0,0) rotate(var(--angle));opacity:0; }
+  8% { opacity:var(--alpha); }
+  35% { transform:translate3d(var(--drift),calc(var(--fall) * .35),0) rotate(var(--turn)); }
+  65% { transform:translate3d(var(--drift2),calc(var(--fall) * .65),0) rotate(var(--angle));opacity:var(--alpha); }
+  100% { transform:translate3d(var(--end-x),var(--fall),0) rotate(var(--end-turn));opacity:0; }
+}
+@keyframes fx-light-float {
+  0% { transform:translate3d(0,var(--fall),0);opacity:0; }
+  20% { opacity:var(--alpha); }
+  40% { transform:translate3d(var(--drift),calc(var(--fall) * .6),0);opacity:calc(var(--alpha) * .4); }
+  62% { transform:translate3d(var(--drift2),calc(var(--fall) * .38),0);opacity:var(--alpha); }
+  100% { transform:translate3d(var(--end-x),0,0);opacity:0; }
 }
 @media (prefers-reduced-motion:reduce) { .fx-petals { display:none; } }
 .fx-portrait { width:170px; }
@@ -424,9 +434,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
     <div class="fx-season-test" role="group" aria-label="계절 효과 테스트">
       <span>효과 테스트</span>
       <button type="button" data-season-choice="auto" aria-pressed="true">자동</button>
-      <button type="button" data-season-choice="flower" aria-pressed="false">꽃잎</button>
+      <button type="button" data-season-choice="spring" aria-pressed="false">봄 꽃잎</button>
+      <button type="button" data-season-choice="summer" aria-pressed="false">여름 꽃잎</button>
       <button type="button" data-season-choice="leaf" aria-pressed="false">단풍</button>
       <button type="button" data-season-choice="snow" aria-pressed="false">눈</button>
+      <button type="button" data-season-choice="light" aria-pressed="false">빛 입자</button>
       <button type="button" data-season-choice="off" aria-pressed="false">끄기</button>
     </div>
     </div>
