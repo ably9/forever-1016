@@ -224,7 +224,7 @@ th[aria-sort="descending"] .fx-sort::after { content: "▼"; font-size: 0.7em; }
 .fx-photo.fx-ph.is-in { opacity: 1; transform: none; filter: none; }
 @media (prefers-reduced-motion: reduce) { .fx-rv, .fx-photo.fx-ph { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; } }
 .fx-letter footer { margin-top: var(--cds-gap-md); font-size: var(--cds-font-size-body); color: var(--color-fg-muted); letter-spacing: .05em; }
-.fx-ambient-controls { position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:6px; }
+.fx-ambient-controls { position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;gap:6px; }
 .fx-ambient-btn { display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:44px;padding:8px 11px;font:inherit;font-size:.75rem;border-radius:999px;border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);box-shadow:0 4px 14px #0003;cursor:pointer; }
 .fx-ambient-btn::after { content:"";width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.3; }
 .fx-ambient-btn[aria-pressed="true"]::after { background:#d9c69b;opacity:1; }
