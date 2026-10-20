@@ -65,7 +65,7 @@ async function run() {
       await page.locator('#lightbox').dispatchEvent('touchstart', {changedTouches:[{identifier:0,clientX:280,clientY:400}]});
       await page.locator('#lightbox').dispatchEvent('touchend', {changedTouches:[{identifier:0,clientX:60,clientY:405}]});
       assert.notEqual(await page.locator('#lb-img').getAttribute('src'), before);
-      assert.equal(await page.locator('#lb-download').getAttribute('download').then(Boolean), true);
+      assert.equal(await page.locator('#lb-download').count(), 0);
       await page.locator('#lb-close').click();
       await page.locator('#ss-open').click();
       await page.locator('#ss-pause').click();

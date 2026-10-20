@@ -274,23 +274,21 @@ th[aria-sort="descending"] .fx-sort::after { content: "▼"; font-size: 0.7em; }
 
 /* 추모를 중심으로, 정산은 상주 전용 공간에 모읍니다. */
 body { padding-top:32px; }
-.fx-head { max-width:46rem;margin:0 auto;text-align:center; }
+.fx-head { width:100%;max-width:none;margin:0 auto;text-align:center; }
 .fx-hero { grid-template-columns:1fr;justify-items:center;gap:22px; }
+.fx-hero-text { width:100%;text-align:center; }
 .fx-portrait { width:170px; }
 .fx-portrait-frame { padding:5px;box-shadow:0 12px 36px #0003; }
 .fx-portrait figcaption { margin-top:12px;font-size:.9rem; }
 .fx-dates { margin-top:7px;font-size:.875rem; }
-.fx-eyebrow { letter-spacing:.15em;font-size:.8rem;margin-bottom:12px; }
-.fx-title { font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.5;letter-spacing:-.035em; }
-.fx-title-line { display:block;font-size:.66em;letter-spacing:.03em;color:#cfc5b7;margin-top:3px; }
-.fx-hero-message { font-size:.94rem;margin:16px 0 8px;line-height:1.8; }
-.fx-main-tabs { justify-content:center;gap:12px;margin:28px auto 0;max-width:48rem; }
-.fx-main-tabs .fx-tab { min-height:48px;font-size:.95rem;padding:10px 12px; }
+.fx-title { width:100%;font-size:clamp(1rem,5.8vw,2rem);line-height:1.6;letter-spacing:-.035em;white-space:nowrap;text-align:center;margin:0; }
+.fx-main-tabs { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;width:100%;margin:24px auto 0;max-width:none; }
+.fx-main-tabs .fx-tab { min-height:48px;font-size:clamp(.78rem,3.5vw,.95rem);padding:10px 4px;text-align:center;white-space:nowrap; }
 .fx-main-tabs #tab-family { color:var(--color-fg-muted); }
 .fx-letter { margin:0 auto;padding:34px 16px 24px;max-width:40rem; }
 .fx-letter p { font-size:clamp(1.1rem,2.2vw,1.35rem);line-height:2.1; }
 .fx-letter footer { margin-top:20px; }
-.fx-after { max-width:36rem;margin:0 auto 28px;padding:0 12px; }
+.fx-after { max-width:36rem;margin:0 auto 28px;padding:0;text-align:center; }
 .fx-days { font-size:.94rem; }
 .fx-days-range { display:block;margin:5px 0 0;font-size:.85rem; }
 .fx-verse { font-size:.94rem;line-height:1.9;margin:22px auto;max-width:31rem; }
@@ -303,10 +301,8 @@ body { padding-top:32px; }
 .fx-text-btn { display:block;margin:18px auto 0;border:0;background:none;color:var(--color-fg-muted);font:inherit;font-size:.85rem;padding:10px;cursor:pointer; }
 .fx-ghost { transition:transform 2s cubic-bezier(.45,0,.25,1),border-radius 2s ease; }
 .fx-skip-intro .fx-rv,.fx-skip-intro .fx-letter::before,.fx-skip-intro .fx-letter::after { opacity:1!important;transform:none!important;filter:none!important;transition:none!important; }
-.fx-album-head { display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin:28px 0 24px; }
-.fx-album-head h2 { font:400 1.5rem var(--font-anthropic-serif);margin:0 0 8px; }
+.fx-album-head { display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px;margin:24px 0; }
 .fx-note { line-height:1.7;font-size:.94rem; }
-.fx-album-head .fx-note { margin:0; }
 .fx-ss-open { min-height:44px;font-size:.94rem;padding:10px 18px; }
 .fx-album-foot { text-align:center;color:var(--color-fg-muted);font-size:.9rem;line-height:1.8;margin-top:26px; }
 .fx-photo.fx-ph { transition:opacity .65s ease,transform .8s ease,filter .65s ease; }
@@ -321,9 +317,12 @@ body { padding-top:32px; }
 .fx-records dl>div:last-child { border:0; }
 .fx-records dt { color:var(--color-fg-muted); }
 .fx-records dd { margin:0;line-height:1.7; }
+#owner-table { table-layout:auto; }
+#owner-table th:first-child,#owner-table td:first-child { width:auto;white-space:nowrap;overflow-wrap:normal;word-break:keep-all; }
+#owner-table th:not(:first-child),#owner-table td:not(:first-child) { width:1%;white-space:nowrap; }
+#owner-table th:last-child,#owner-table td:last-child { text-align:right; }
 .fx-scroll { overflow-x:auto; }
 .fx-lb { touch-action:pan-y pinch-zoom; }
-.fx-download { color:#eee;text-decoration:none;border:1px solid #ffffff50;border-radius:999px;padding:10px 20px;min-height:44px;font-size:.94rem; }
 .fx-lb-fig img { max-height:calc(100dvh - 12rem); }
 .fx-ss { cursor:default; }
 .fx-ss-controls { position:absolute;left:50%;bottom:calc(48px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:#151515b8;padding:5px 8px;border:1px solid #ffffff25;border-radius:999px;color:#eee;white-space:nowrap; }
@@ -334,12 +333,12 @@ body { padding-top:32px; }
 .fx-ss-title { font-size:1.5rem;background:#0008; }
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:2px solid #d6c09b;outline-offset:4px; }
 body[data-view="album"] .fx-portrait,body[data-view="family"] .fx-portrait { width:110px; }
-body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size:1.6rem; }
+body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size:clamp(1rem,5.8vw,1.6rem); }
 @media(max-width:600px){
- body { padding:22px 16px 88px; }
+ body { padding:22px 10px 88px; }
  .fx-portrait { width:150px; }
  .fx-main-tabs { gap:0;margin-top:22px; }
- .fx-main-tabs .fx-tab { padding:10px 9px;font-size:.9rem; }
+ .fx-main-tabs .fx-tab { padding:10px 4px; }
  .fx-letter { padding:28px 0 22px; }
  .fx-letter p { font-size:1.1rem; }
  .fx-line { margin-bottom:4px; }
@@ -347,6 +346,12 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
  .fx-subtabs { flex-wrap:nowrap;overflow-x:auto;padding:4px 0 8px; }
  .fx-subtabs .fx-tab { flex-shrink:0; }
  .fx-records dl>div { grid-template-columns:4.5rem 1fr;gap:10px; }
+ #card-owners { padding:16px 12px; }
+ #owner-table { font-size:.9rem; }
+ #owner-table th,#owner-table td { padding:10px 5px; }
+ #owner-table th:first-child,#owner-table td:first-child { padding-left:0; }
+ #owner-table th:last-child,#owner-table td:last-child { padding-right:0; }
+ #owner-table .fx-sharebar { display:none; }
  .fx-ss-controls { bottom:calc(48px + env(safe-area-inset-bottom,0px)); }
 }
 @media(prefers-reduced-motion:reduce){
@@ -381,9 +386,7 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
       <figcaption>故 임경숙<span class="fx-dates">1970. 5. 13 – 2026. 10. 16</span></figcaption>
     </figure>
     <div class="fx-hero-text">
-    <p class="fx-eyebrow">우리 마음에 언제나</p>
-    <h1 class="fx-title">사랑하는 임경숙<span class="fx-title-line">행복해진 날 <span aria-hidden="true">🕊</span></span></h1>
-    <p class="fx-sub fx-hero-message">함께한 사랑을 오래도록 기억합니다.</p>
+    <h1 class="fx-title">사랑하는 임경숙 행복해진 날 <span aria-hidden="true">🕊</span></h1>
     </div>
   </header>
 
@@ -412,11 +415,9 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
 
   <section class="fx-page" id="pg-album" role="tabpanel" aria-labelledby="tab-album" hidden>
     <div class="fx-album-head">
-      <div><h2>함께한 순간들</h2><p class="fx-note">사진 속에 남아 있는, 우리의 소중한 시간들.</p></div>
       <button class="fx-ss-open" id="ss-open" type="button"><span aria-hidden="true">▶</span> 사진으로 고모 만나기</button>
     </div>
     <div class="fx-gallery" id="gallery"></div>
-    <p class="fx-album-foot">사진을 누르면 크게 볼 수 있어요. 좌우로 넘겨 보거나 사진을 저장할 수 있습니다.</p>
   </section>
 
   <section class="fx-page" id="pg-family" role="tabpanel" aria-labelledby="tab-family" hidden>
@@ -435,10 +436,10 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
     <div id="family-content" hidden>
       <div class="fx-family-head"><p class="fx-note">가족을 위한 정산과 장례 기록</p><button class="fx-btn" id="family-lock" type="button">다시 잠그기</button></div>
       <div class="fx-tabs fx-subtabs" role="tablist" aria-label="상주 전용 메뉴">
-        <button class="fx-tab" role="tab" id="tab-summary" data-tab="summary" aria-controls="pg-summary" aria-selected="true">정산 요약</button>
+        <button class="fx-tab" role="tab" id="tab-summary" data-tab="summary" aria-controls="pg-summary" aria-selected="true">요약</button>
         <button class="fx-tab" role="tab" id="tab-costs" data-tab="costs" aria-controls="pg-costs" aria-selected="false" tabindex="-1">비용상세</button>
         <button class="fx-tab" role="tab" id="tab-donations" data-tab="donations" aria-controls="pg-donations" aria-selected="false" tabindex="-1">부의금 명단</button>
-        <button class="fx-tab" role="tab" id="tab-owners" data-tab="owners" aria-controls="pg-owners" aria-selected="false" tabindex="-1">담당자별 집계</button>
+        <button class="fx-tab" role="tab" id="tab-owners" data-tab="owners" aria-controls="pg-owners" aria-selected="false" tabindex="-1">집계</button>
         <button class="fx-tab" role="tab" id="tab-records" data-tab="records" aria-controls="pg-records" aria-selected="false" tabindex="-1">장례 기록</button>
       </div>
   <section class="fx-page" id="pg-summary" role="tabpanel" aria-labelledby="tab-summary" hidden>
@@ -568,7 +569,7 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
   <button class="fx-lb-btn fx-lb-prev" id="lb-prev" aria-label="이전 사진">‹</button>
   <figure class="fx-lb-fig">
     <img id="lb-img" alt="">
-    <figcaption id="lb-cap"></figcaption><a class="fx-download" id="lb-download" download>사진 저장</a>
+    <figcaption id="lb-cap"></figcaption>
   </figure>
   <button class="fx-lb-btn fx-lb-next" id="lb-next" aria-label="다음 사진">›</button>
 </div>
@@ -1109,8 +1110,6 @@ function showLb(i) {
   const img = document.getElementById('lb-img');
   img.src=p.url; img.alt='고 임경숙 님 사진 '+(lbIdx+1);
   document.getElementById('lb-cap').textContent=(lbIdx+1)+' / '+lbList.length;
-  const save=document.getElementById('lb-download');
-  save.href=p.url; save.download='고모와-함께한-순간-'+String(lbIdx+1).padStart(2,'0')+'.jpg';
   document.getElementById('lb-prev').hidden=lbList.length<2;
   document.getElementById('lb-next').hidden=lbList.length<2;
 }
