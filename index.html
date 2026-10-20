@@ -347,11 +347,14 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
  .fx-subtabs .fx-tab { flex-shrink:0; }
  .fx-records dl>div { grid-template-columns:4.5rem 1fr;gap:10px; }
  #card-owners { padding:16px 12px; }
- #owner-table { font-size:.9rem; }
- #owner-table th,#owner-table td { padding:10px 5px; }
- #owner-table th:first-child,#owner-table td:first-child { padding-left:0; }
+ #owner-table { font-size:.9rem;table-layout:fixed; }
+ #owner-table th,#owner-table td { padding:8px 5px; }
+ #owner-table th:first-child,#owner-table td:first-child { padding-left:0;width:24%; }
+ #owner-table th:nth-child(2),#owner-table td:nth-child(2) { width:12%; }
+ #owner-table th:nth-child(3),#owner-table td:nth-child(3) { width:36%; }
+ #owner-table th:nth-child(4),#owner-table td:nth-child(4) { width:28%; }
  #owner-table th:last-child,#owner-table td:last-child { padding-right:0; }
- #owner-table .fx-sharebar { display:none; }
+ #owner-table .fx-sharebar { display:block;width:100%;max-width:4.5rem;height:7px;margin:6px 0 0 auto; }
  .fx-ss-controls { bottom:calc(48px + env(safe-area-inset-bottom,0px)); }
 }
 @media(prefers-reduced-motion:reduce){
