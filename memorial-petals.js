@@ -6,16 +6,15 @@
   layer.className = 'fx-petals';
   layer.setAttribute('aria-hidden', 'true');
   root.prepend(layer);
-  const buttons = [...document.querySelectorAll('[data-season-choice]')];
   let ready = !document.getElementById('intro');
-  const requested = new URLSearchParams(location.search).get('effect');
-  let choice = ['spring','summer','leaf','snow','light','off'].includes(requested) ? requested : 'auto';
-  let lastChoice = choice === 'off' ? 'auto' : choice;
+  let enabled = true;
   const toggle = document.getElementById('effect-toggle');
-  buttons.forEach(item => item.setAttribute('aria-pressed', String(item.dataset.seasonChoice === choice)));
   let rendered = '';
+  const koreanDate = new Intl.DateTimeFormat('en-US', {timeZone:'Asia/Seoul',month:'numeric',day:'numeric'});
   function season() {
-    const month = Number(new Intl.DateTimeFormat('en-US', {timeZone:'Asia/Seoul',month:'numeric'}).format(new Date()));
+    const parts = Object.fromEntries(koreanDate.formatToParts(new Date()).filter(p => p.type !== 'literal').map(p => [p.type, Number(p.value)]));
+    const {month, day} = parts;
+    if (month === 10 && day === 16) return 'light';
     return month >= 3 && month <= 5 ? 'spring' : month >= 6 && month <= 8 ? 'summer' : month >= 9 && month <= 11 ? 'leaf' : 'snow';
   }
   const random = (min, max) => min + Math.random() * (max - min);
@@ -35,11 +34,10 @@
     update();
   }
   function update() {
-    buttons.forEach(item => item.setAttribute('aria-pressed', String(item.dataset.seasonChoice === choice)));
-    toggle.setAttribute('aria-pressed', String(choice !== 'off'));
-    toggle.setAttribute('aria-label', choice === 'off' ? '효과 켜기' : '효과 끄기');
-    toggle.title = choice === 'off' ? '효과 켜기' : '효과 끄기';
-    const current = choice === 'auto' ? season() : choice;
+    toggle.setAttribute('aria-pressed', String(enabled));
+    toggle.setAttribute('aria-label', enabled ? '효과 끄기' : '효과 켜기');
+    toggle.title = enabled ? '효과 끄기' : '효과 켜기';
+    const current = enabled ? season() : 'off';
     const count = current === 'snow' ? (innerWidth < 700 ? 26 : 40) : (innerWidth < 700 ? 12 : 18);
     const key = current + ':' + count;
     layer.classList.toggle('is-visible', ready && !document.hidden && current !== 'off');
@@ -57,14 +55,8 @@
       petal.addEventListener('animationend', () => release(petal, current, false));
     }
   }
-  buttons.forEach(button => button.addEventListener('click', () => {
-    choice = button.dataset.seasonChoice;
-    if (choice !== 'off') lastChoice = choice;
-    update();
-  }));
   toggle.addEventListener('click', () => {
-    if (choice === 'off') choice = lastChoice;
-    else { lastChoice = choice; choice = 'off'; }
+    enabled = !enabled;
     update();
   });
   resize();
@@ -72,5 +64,6 @@
   window.addEventListener('resize', resize);
   window.addEventListener('fx:memorial-entered', () => { ready = true; update(); }, {once:true});
   document.addEventListener('visibilitychange', update);
+  window.addEventListener('pageshow', update);
   setInterval(update, 60000);
 })();

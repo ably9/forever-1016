@@ -290,10 +290,6 @@ body { padding-top:32px; }
 .fx-petals[data-season="leaf"] .fx-petal { width:calc(15px * var(--size));height:calc(17px * var(--size));border-radius:0;background:linear-gradient(145deg,#b7673c,#d7a264);clip-path:polygon(50% 0,60% 26%,77% 14%,74% 39%,100% 35%,84% 58%,94% 68%,57% 79%,54% 100%,47% 100%,46% 79%,7% 68%,17% 57%,0 35%,27% 39%,24% 14%,41% 26%); }
 .fx-petals[data-season="snow"] .fx-petal { width:calc(4px * var(--size));height:calc(4px * var(--size));border-radius:50%;background:#f6f2e9; }
 .fx-petals[data-season="light"] .fx-petal { width:calc(4px * var(--size));height:calc(4px * var(--size));border-radius:50%;background:radial-gradient(circle,#fff8df 0%,#e9d4a4 35%,#dec48d33 72%,transparent 100%);box-shadow:0 0 9px 3px #ead5a42e;animation-name:fx-light-float; }
-.fx-season-test { display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px;margin:14px auto 0; }
-.fx-season-test span { font-size:.68rem;color:var(--color-fg-muted);margin-right:3px; }
-.fx-season-test button { font:inherit;font-size:.7rem;color:var(--color-fg-muted);border:1px solid var(--color-border-line);border-radius:16px;background:transparent;padding:5px 9px;min-height:30px;cursor:pointer; }
-.fx-season-test button[aria-pressed="true"] { color:var(--color-fg);border-color:#aaa08c;background:#ece8e10a; }
 .fx-petals.is-visible .fx-petal { animation-play-state:running; }
 @keyframes fx-petal-fall {
   0% { transform:translate3d(0,0,0) rotate(var(--angle));opacity:0; }
@@ -435,15 +431,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
       <div><dt>떠나보낸 지</dt><dd id="memorial-elapsed">—</dd></div>
       <div><dt>다음 기일까지</dt><dd id="memorial-countdown">—</dd><dd><small id="memorial-next-date"></small></dd></div>
     </dl>
-    <div class="fx-season-test" role="group" aria-label="계절 효과 테스트">
-      <span>효과 테스트</span>
-      <button type="button" data-season-choice="auto" aria-pressed="true">자동</button>
-      <button type="button" data-season-choice="spring" aria-pressed="false">봄 꽃잎</button>
-      <button type="button" data-season-choice="summer" aria-pressed="false">여름 · 괭이밥</button>
-      <button type="button" data-season-choice="leaf" aria-pressed="false">단풍</button>
-      <button type="button" data-season-choice="snow" aria-pressed="false">눈</button>
-      <button type="button" data-season-choice="light" aria-pressed="false">빛 입자</button>
-    </div>
     </div>
   </header>
 
@@ -1479,7 +1466,7 @@ dash.onData(() => {
 </script>
 
 <script src="memorial-dates.js"></script>
-<script src="memorial-petals.js?v=20261020-controls"></script>
+<script src="memorial-petals.js?v=20261020-auto"></script>
 </body>
 </html>
 
