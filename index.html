@@ -279,8 +279,8 @@ body { padding-top:32px; }
 .fx-hero-text { width:100%;text-align:center; }
 .fx-portrait { width:170px; }
 .fx-portrait-frame { padding:5px;box-shadow:0 12px 36px #0003; }
-.fx-portrait figcaption { margin-top:12px;font-size:.9rem; }
-.fx-dates { margin-top:7px;font-size:.875rem; }
+.fx-portrait figcaption { display:flex;flex-direction:column;align-items:center;margin-top:12px;font-size:.9rem;text-align:center; }
+.fx-dates { flex:none;width:max-content;margin-top:7px;font-size:.875rem;text-align:center; }
 .fx-title { width:100%;font-size:clamp(1rem,5.8vw,2rem);line-height:1.6;letter-spacing:-.035em;white-space:nowrap;text-align:center;margin:0; }
 .fx-main-tabs { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;width:100%;margin:24px auto 0;max-width:none; }
 .fx-main-tabs .fx-tab { min-height:48px;font-size:clamp(.78rem,3.5vw,.95rem);padding:10px 4px;text-align:center;white-space:nowrap; }
@@ -291,7 +291,9 @@ body { padding-top:32px; }
 .fx-after { max-width:36rem;margin:0 auto 28px;padding:0;text-align:center; }
 .fx-days { font-size:.94rem; }
 .fx-days-range { display:block;margin:5px 0 0;font-size:.85rem; }
-.fx-verse { font-size:.94rem;line-height:1.9;margin:22px auto;max-width:31rem; }
+.fx-verse { width:100%;max-width:none;font-size:.94rem;line-height:1.85;margin:22px auto;text-align:center; }
+.fx-verse-text { display:block;text-wrap:balance;word-break:keep-all;overflow-wrap:normal; }
+.fx-verse .fx-verse-ref { display:block;margin:12px 0 0;font-size:.8125rem;font-style:normal;letter-spacing:.04em;line-height:1.6; }
 .fx-home-album { padding:12px 22px;font-size:1rem;min-height:48px; }
 .fx-rv { transition:opacity 1.4s ease,transform 1.4s ease,filter 1.4s ease; }
 .fx-intro { transition:opacity 1.2s ease,visibility 1.2s; }
@@ -332,8 +334,6 @@ body { padding-top:32px; }
 .fx-ss.is-paused .fx-ss-img { animation-play-state:paused; }
 .fx-ss-title { font-size:1.5rem;background:#0008; }
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:2px solid #d6c09b;outline-offset:4px; }
-body[data-view="album"] .fx-portrait,body[data-view="family"] .fx-portrait { width:110px; }
-body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size:clamp(1rem,5.8vw,1.6rem); }
 @media(max-width:600px){
  body { padding:22px 10px 88px; }
  .fx-portrait { width:150px; }
@@ -374,6 +374,9 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
 .fx-install-head h2 { margin:0;font-size:1.25rem; }
 .fx-install-head button { min-width:44px;min-height:44px;color:var(--color-fg);background:transparent;border:0;font:inherit;cursor:pointer; }
 .fx-install-help ol { padding-left:24px; }
+#install-steps section { margin-top:20px; }
+#install-steps section+section { border-top:1px solid var(--color-border-line);padding-top:18px; }
+#install-steps h3 { font-size:1rem;line-height:1.6;margin:0; }
 .fx-install-help li { padding-left:4px;margin:12px 0; }
 .fx-install-copy { display:flex;gap:8px; }
 .fx-install-copy input { flex:1;min-width:0;color:var(--color-fg-muted);background:var(--color-bg);border:1px solid var(--color-border-line);border-radius:8px;padding:10px;font:inherit;font-size:.8rem; }
@@ -406,7 +409,7 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
     </blockquote>
     <div class="fx-after fx-rv" data-d="5500">
       <p class="fx-days">우리 곁에 머물러 준 <b>20,610일</b><span class="fx-days-range">1970. 5. 13 – 2026. 10. 16</span></p>
-      <p class="fx-verse">“모든 눈물을 그 눈에서 씻기시매 다시 사망이 없고 애통하는 것이나 곡하는 것이나 아픈 것이 다시 있지 아니하리니” <span class="fx-verse-ref">요한계시록 21:4</span></p>
+      <p class="fx-verse"><span class="fx-verse-text">“모든 눈물을 그 눈에서 씻기시매 다시 사망이 없고 애통하는 것이나 곡하는 것이나 아픈 것이 다시 있지 아니하리니”</span><cite class="fx-verse-ref">요한계시록 21장 4절</cite></p>
       <button class="fx-ss-open fx-home-album" id="album-go" data-tab="album" type="button">함께한 순간들 보기 <span aria-hidden="true">→</span></button>
     </div>
     <aside class="fx-install-card" id="install-card" aria-label="홈 화면에 간직하기">
@@ -550,7 +553,7 @@ body[data-view="album"] .fx-title,body[data-view="family"] .fx-title { font-size
 <dialog class="fx-install-help" id="install-help" aria-labelledby="install-title">
   <div class="fx-install-head"><h2 id="install-title">홈 화면에 추가하기</h2><button id="install-close" type="button" aria-label="안내 닫기">✕</button></div>
   <p id="install-platform-note"></p>
-  <ol id="install-steps"></ol>
+  <div id="install-steps"></div>
   <p class="fx-note" id="install-extra"></p>
   <div class="fx-install-copy"><input id="install-url" type="text" readonly aria-label="사이트 주소"><button class="fx-btn" id="install-copy" type="button">주소 복사</button></div>
   <p id="install-status" role="status"></p>
@@ -1376,23 +1379,32 @@ dash.onData(() => {
     const ua=navigator.userAgent;
     const ios=/iP(hone|ad|od)/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
     const android=/Android/i.test(ua),inApp=/KAKAOTALK|NAVER|Instagram|FBAN|FBAV|Line\//i.test(ua);
-    let steps,note,extra;
-    if(ios){
-      note=inApp?'카카오톡 등 앱 안에서 열었다면, 먼저 Safari에서 이 주소를 열어 주세요.':'아이폰·아이패드에서는 Safari에서 추가할 수 있어요.';
-      steps=['Safari에서 이 사이트를 열어 주세요.','공유 버튼을 눌러 주세요. 페이지 메뉴 안에 공유가 있을 수도 있어요.','아래로 내려 ‘홈 화면에 추가’를 선택해 주세요.','이름을 확인하고 ‘추가’를 눌러 주세요.'];
-      extra='‘웹 앱으로 열기’가 보이면 켜 주세요. ‘홈 화면에 추가’가 없으면 공유 메뉴 아래의 ‘동작 편집’에서 추가할 수 있어요.';
-    }else if(android){
-      note=inApp?'앱 안에서 열었다면, 먼저 Chrome 또는 삼성 인터넷으로 열어 주세요.':'Chrome 또는 삼성 인터넷에서 홈 화면에 추가할 수 있어요.';
-      steps=['Chrome 또는 삼성 인터넷에서 이 사이트를 열어 주세요.','브라우저 메뉴(⋮ 또는 ☰)를 눌러 주세요.','‘홈 화면에 추가’ 또는 ‘앱 설치’를 선택해 주세요.','이름을 확인하고 ‘추가’ 또는 ‘설치’를 눌러 주세요.'];
-      extra='브라우저에 따라 메뉴 이름이 조금 다를 수 있어요.';
-    }else{
-      note='휴대폰에서 아래 주소를 열면 홈 화면에 추가할 수 있어요.';
-      steps=['사이트 주소를 복사해 휴대폰에서 열어 주세요.','아이폰: Safari → 공유 → 홈 화면에 추가','안드로이드: 브라우저 메뉴 → 홈 화면에 추가 또는 앱 설치'];
-      extra='PC의 Chrome·Edge에서는 주소창의 설치 아이콘이나 브라우저 메뉴에서도 추가할 수 있어요.';
-    }
+    const note=inApp
+      ? '카카오톡 등 앱 안에서 열었다면, 아이폰은 Safari, 안드로이드는 Chrome 또는 삼성 인터넷에서 이 주소를 열어 주세요.'
+      : '아이폰과 안드로이드 모두 홈 화면에 추가할 수 있어요. 아래에서 사용하는 기기의 방법을 따라 주세요.';
+    const guides=[
+      {title:'아이폰 · 아이패드 (Safari)',steps:[
+        'Safari에서 이 사이트를 열어 주세요.',
+        '공유 버튼을 눌러 주세요. 페이지 메뉴 안에 공유가 있을 수도 있어요.',
+        '‘홈 화면에 추가’를 선택해 주세요.',
+        '이름을 확인하고 ‘추가’를 눌러 주세요.'
+      ],note:'‘웹 앱으로 열기’가 보이면 켜 주세요. ‘홈 화면에 추가’가 없으면 공유 메뉴 아래의 ‘동작 편집’에서 추가할 수 있어요.'},
+      {title:'안드로이드 (Chrome · 삼성 인터넷)',steps:[
+        'Chrome 또는 삼성 인터넷에서 이 사이트를 열어 주세요.',
+        '브라우저 메뉴(⋮ 또는 ☰)를 눌러 주세요.',
+        '‘홈 화면에 추가’ 또는 ‘앱 설치’를 선택해 주세요. 삼성 인터넷에서는 ‘현재 페이지 추가 → 홈 화면’으로 표시될 수도 있어요.',
+        '이름을 확인하고 ‘추가’ 또는 ‘설치’를 눌러 주세요.'
+      ],note:'설치 창이 바로 열리면 ‘설치’를 눌러 주세요. 메뉴 이름은 브라우저에 따라 조금 다를 수 있어요.'}
+    ];
+    if(android&&!ios)guides.reverse();
     document.getElementById('install-platform-note').textContent=note;
-    document.getElementById('install-extra').textContent=extra;
-    document.getElementById('install-steps').replaceChildren(...steps.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
+    document.getElementById('install-extra').textContent='추가한 뒤에는 휴대폰 홈 화면의 고모 사진 아이콘으로 바로 들어올 수 있어요.';
+    document.getElementById('install-steps').replaceChildren(...guides.map(guide=>{
+      const section=document.createElement('section'),heading=document.createElement('h3'),list=document.createElement('ol'),tip=document.createElement('p');
+      heading.textContent=guide.title;tip.className='fx-note';tip.textContent=guide.note;
+      list.append(...guide.steps.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
+      section.append(heading,list,tip);return section;
+    }));
     document.getElementById('install-url').value=homeUrl;status.textContent='';
     help.showModal();
   }
