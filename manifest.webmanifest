@@ -1,36 +1,36 @@
 {
- "name": "사랑하는 임경숙 행복해진 날",
- "short_name": "임경숙",
- "start_url": "./",
- "scope": "./",
- "display": "standalone",
- "background_color": "#1b1a18",
- "theme_color": "#1b1a18",
- "lang": "ko",
- "icons": [
-  {
-   "src": "apple-touch-icon.png?v=3",
-   "sizes": "180x180",
-   "type": "image/png",
-   "purpose": "any"
-  },
-  {
-   "src": "icon-192.png?v=3",
-   "sizes": "192x192",
-   "type": "image/png",
-   "purpose": "any"
-  },
-  {
-   "src": "icon-512.png?v=3",
-   "sizes": "512x512",
-   "type": "image/png",
-   "purpose": "any"
-  },
-  {
-   "src": "icon-maskable-512.png?v=3",
-   "sizes": "512x512",
-   "type": "image/png",
-   "purpose": "maskable"
-  }
- ]
+  "name": "사랑하는 임경숙 행복해진 날",
+  "short_name": "임경숙",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1b1a18",
+  "theme_color": "#1b1a18",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "apple-touch-icon-face.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-face-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-face-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-face-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }
