@@ -280,13 +280,19 @@ body { padding-top:32px; }
 .fx { position:relative; }
 .fx-petals { position:absolute;top:0;left:0;width:100%;overflow:hidden;pointer-events:none;z-index:2;opacity:0;transition:opacity .8s ease;mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 70%,transparent 98%);-webkit-mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 70%,transparent 98%); }
 .fx-petals.is-visible { opacity:1; }
-.fx-petal { position:absolute;top:-14px;left:var(--left);width:8px;height:13px;border-radius:85% 15% 75% 25%;background:linear-gradient(135deg,#f1ead9,#cfc3aa);opacity:0;animation:fx-petal-fall var(--duration) linear var(--delay) both;animation-play-state:paused; }
+.fx-petal { position:absolute;top:-14px;left:var(--left);width:9px;height:14px;border-radius:85% 15% 75% 25%;background:linear-gradient(135deg,#f1ead9,#cfc3aa);opacity:0;animation:fx-petal-fall var(--duration) linear var(--delay) infinite both;animation-play-state:paused; }
+.fx-petals[data-season="leaf"] .fx-petal { width:15px;height:17px;border-radius:0;background:linear-gradient(145deg,#b7673c,#d7a264);clip-path:polygon(50% 0,60% 26%,77% 14%,74% 39%,100% 35%,84% 58%,94% 68%,57% 79%,54% 100%,47% 100%,46% 79%,7% 68%,17% 57%,0 35%,27% 39%,24% 14%,41% 26%); }
+.fx-petals[data-season="snow"] .fx-petal { width:4px;height:4px;border-radius:50%;background:#f6f2e9; }
+.fx-season-test { display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px;margin:14px auto 0; }
+.fx-season-test span { font-size:.68rem;color:var(--color-fg-muted);margin-right:3px; }
+.fx-season-test button { font:inherit;font-size:.7rem;color:var(--color-fg-muted);border:1px solid var(--color-border-line);border-radius:16px;background:transparent;padding:5px 9px;min-height:30px;cursor:pointer; }
+.fx-season-test button[aria-pressed="true"] { color:var(--color-fg);border-color:#aaa08c;background:#ece8e10a; }
 .fx-petals.is-visible .fx-petal { animation-play-state:running; }
 @keyframes fx-petal-fall {
   0% { transform:translate3d(0,0,0) rotate(15deg);opacity:0; }
-  12% { opacity:.32; }
-  45% { transform:translate3d(var(--drift),calc(var(--fall) * .45),0) rotate(95deg);opacity:.3; }
-  72% { opacity:.2; }
+  8% { opacity:.48; }
+  45% { transform:translate3d(var(--drift),calc(var(--fall) * .45),0) rotate(95deg);opacity:.42; }
+  72% { opacity:.28; }
   100% { transform:translate3d(0,var(--fall),0) rotate(190deg);opacity:0; }
 }
 @media (prefers-reduced-motion:reduce) { .fx-petals { display:none; } }
@@ -415,6 +421,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { 
       <div><dt>떠나보낸 지</dt><dd id="memorial-elapsed">—</dd></div>
       <div><dt>다음 기일까지</dt><dd id="memorial-countdown">—</dd><dd><small id="memorial-next-date"></small></dd></div>
     </dl>
+    <div class="fx-season-test" role="group" aria-label="계절 효과 테스트">
+      <span>효과 테스트</span>
+      <button type="button" data-season-choice="auto" aria-pressed="true">자동</button>
+      <button type="button" data-season-choice="flower" aria-pressed="false">꽃잎</button>
+      <button type="button" data-season-choice="leaf" aria-pressed="false">단풍</button>
+      <button type="button" data-season-choice="snow" aria-pressed="false">눈</button>
+      <button type="button" data-season-choice="off" aria-pressed="false">끄기</button>
+    </div>
     </div>
   </header>
 
@@ -1071,7 +1085,6 @@ function startIntro() {
   if (introStarted) return;
   introStarted = true;
   LETTER_DONE = performance.now() + 6900;
-  setTimeout(() => window.dispatchEvent(new Event('fx:memorial-ready')), 6900);
   const letter = document.querySelector('.fx-letter');
   requestAnimationFrame(() => {
     if (letter) letter.classList.add('is-open');
@@ -1115,7 +1128,7 @@ function startIntro() {
     } else { startIntro(); }
     cover.classList.add('is-out');
     if (skip) cover.style.transition = 'none';
-    setTimeout(() => { cover.remove(); document.querySelector('.fx-main-tabs [aria-selected="true"]').focus({preventScroll:true}); }, skip ? 0 : 1250);
+    setTimeout(() => { cover.remove(); window.dispatchEvent(new Event('fx:memorial-entered')); document.querySelector('.fx-main-tabs [aria-selected="true"]').focus({preventScroll:true}); }, skip ? 0 : 1250);
   };
   document.getElementById('intro-enter').addEventListener('click', () => enter(true));
   document.getElementById('intro-quiet').addEventListener('click', () => enter(false));
